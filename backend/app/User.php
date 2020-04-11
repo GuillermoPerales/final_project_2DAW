@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use App\Role;
 use App\Permission;
 
@@ -28,6 +29,16 @@ class User extends Authenticatable {
         'verified',
         'verification_token',
     ];
+
+    public function setNameAttribute($value){
+        $this->attributes['name']= strtolower($value);
+    }
+    public function setEmailAttribute($value){
+        $this->attributes['email']= strtolower($value);
+    }
+    public function getNameAttribute($value){
+        return ucfirst($value);
+    }
 
     /**
     * The attributes that should be hidden for arrays.
@@ -54,7 +65,7 @@ class User extends Authenticatable {
     }
 
 public static function generateVerificationToken(){
-    return str_random(40);
+    return Str::random(40);
 }
 
 public function rol(){

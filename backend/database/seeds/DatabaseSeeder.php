@@ -5,7 +5,7 @@ use App\Product;
 use App\Role;
 use App\Permission;
 use App\License;
-use Iluminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::statement('SET FOREIGN_KEY_CHEKS=0');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
         User::truncate();
         Product::truncate();
@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
             }
         );
 
-        factory(License::class, 100)-create();
+        factory(License::class, 100)->create();
 
     }
 }

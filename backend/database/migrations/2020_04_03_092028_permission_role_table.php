@@ -13,13 +13,9 @@ class PermissionRoleTable extends Migration
      */
     public function up()
     {
-        Schema::create('permission_role', function (Blueprint $table) {
-         /*  $table->integer('permission_id')->unsigned();
-          $table->integer('role_id')-unsigned(); */
+        Schema::create('permission_role', function (Blueprint $table) {       
           $table->foreignId('permission_id')->constrained();
-          $table->foreignId('role_id')->constrained();
-          /* $table->foreign('permission_id')->references('id')->on('permissions');
-          $table->foreign('role_id')->references('id')->on('roles'); */
+          $table->foreignId('role_id')->constrained();        
         });
     }
 
