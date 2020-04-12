@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\User;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 
-class UserController extends Controller {
+class UserController extends ApiController {
     /**
     * Display a listing of the resource.
     *
@@ -15,7 +15,7 @@ class UserController extends Controller {
 
     public function index() {
         $users = User::all();
-        return response()->json( ['data' => $users], 200 );
+        return $this->showAll( $users );
     }
 
     /**
@@ -51,7 +51,7 @@ class UserController extends Controller {
 
         $user = User::create( $fields );
 
-        return response()->json( ['data'=> $user], 201 );
+        return $this->showOne( $user, 201 );
     }
 
     /**
@@ -63,7 +63,7 @@ class UserController extends Controller {
 
     public function show( $id ) {
         $user = User::findOrFail( $id );
-        return response()->json( ['data' => $user], 200 );
+        return $this->showOne( $user );
     }
 
     /**
@@ -109,11 +109,11 @@ class UserController extends Controller {
         }
 
         if ( !$user->isDirty() ) {
-            return response()->json( ['error'=>'No has cambiado ningun valor para actualizar', 'code'=>422], 422 );
+            return $this->errorResponse( 'No has cambiado ningun valor para actualizar', 422 );
         }
 
         $user->save();
-        return response()->json( ['data'=>$user], 200 );
+        return $this->showOne( $user );
 
     }
 
@@ -127,6 +127,6 @@ class UserController extends Controller {
     public function destroy( $id ) {
         $user = User::findOrFail( $id );
         $user->delete();
-        return response()->json( ['data'=>$user], 200 );
+        return $this->showOne( $user );
     }
 }

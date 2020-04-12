@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\License;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 
-class LicenseController extends Controller
+class LicenseController extends ApiController
 {
     /**
      * Display a listing of the resource.
