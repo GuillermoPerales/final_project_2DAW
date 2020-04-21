@@ -10,7 +10,7 @@ class UserController extends ApiController {
     /**
     * Display a listing of the resource.
     *
-    * @return \Illuminate\Http\Response
+    * @return \Illuminate\Http\ResponseSupport
     */
 
     public function index() {
@@ -61,8 +61,7 @@ class UserController extends ApiController {
     * @return \Illuminate\Http\Response
     */
 
-    public function show( $id ) {
-        $user = User::findOrFail( $id );
+    public function show( User $user ) {      
         return $this->showOne( $user );
     }
 
@@ -85,8 +84,8 @@ class UserController extends ApiController {
     * @return \Illuminate\Http\Response
     */
 
-    public function update( Request $request, $id ) {
-        $user = User::findOrFail( $id );
+    public function update( Request $request, User $user ) {
+      
         $rules = [
             'email'=> '|email|unique:users,email,'. $user->id,
             'password'=> '|min:6|confirmed',
@@ -109,7 +108,7 @@ class UserController extends ApiController {
         }
 
         if ( !$user->isDirty() ) {
-            return $this->errorResponse( 'No has cambiado ningun valor para actualizar', 422 );
+            return $this->errorResponse( 'Nothing change', 422 );
         }
 
         $user->save();
@@ -124,8 +123,7 @@ class UserController extends ApiController {
     * @return \Illuminate\Http\Response
     */
 
-    public function destroy( $id ) {
-        $user = User::findOrFail( $id );
+    public function destroy( User $user ) {
         $user->delete();
         return $this->showOne( $user );
     }

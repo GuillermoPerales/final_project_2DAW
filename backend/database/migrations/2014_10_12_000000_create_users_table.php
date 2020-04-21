@@ -22,8 +22,11 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('verified')->default(User::USER_NOT_VERIFIED);
             $table->string('verification_token')->nullable();
+            $table->integer('reseller')->unsigned();
+            $table->foreignId('role_id')->constrained();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -2,18 +2,21 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\User;
-use App\product;
+use App\Product;
 
-class License extends Model {
-    protected $fillable = [
-        'license_key',
+class License extends Product {
+
+    use SoftDeletes;
+    protected $dates=['delete_at'];
+
+    protected $fillable = [        
+        'license_key',     
+        'activation_date',
+        'expiration_date',
         'user_id',
         'product_id',
-        'name',
-        'activation_date',
-        'expiration_date'
     ];
 
 public function user(){

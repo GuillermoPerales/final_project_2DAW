@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\License;
+namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\ApiController;
-use App\License;
+use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 
-class LicenseController extends ApiController
+class UserRoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,7 @@ class LicenseController extends ApiController
      */
     public function index()
     {
-        $licenses=License::all();
-        return $this->showAll($licenses);
+        //
     }
 
     /**
@@ -43,21 +42,21 @@ class LicenseController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  \App\License  $license
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(License $license)
+    public function show(User $user)
     {
-        return $this->showone($license);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\License  $license
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(License $license)
+    public function edit(User $user)
     {
         //
     }
@@ -66,10 +65,10 @@ class LicenseController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\License  $license
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, License $license)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -77,10 +76,10 @@ class LicenseController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\License  $license
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(License $license)
+    public function destroy(User $user)
     {
         //
     }

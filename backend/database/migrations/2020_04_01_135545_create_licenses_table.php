@@ -14,13 +14,10 @@ class CreateLicensesTable extends Migration
     public function up()
     {
         Schema::create('licenses', function (Blueprint $table) {
-            $table->id('license_key');
-            /* $table->integer('user_id')->unsigned();
-            $table->integer('product_id')->unsigned(); */
+            $table->id();
+            $table->string('license_key');          
             $table->foreignId('user_id')->constrained();
             $table->foreignId('product_id')->constrained();
-
-            $table->string('name');
             $table->date('activation_date');
             $table->date('expiration_date');
             $table->timestamps();

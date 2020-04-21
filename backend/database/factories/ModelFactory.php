@@ -26,11 +26,13 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
+        // 'email_verified_at' => now(),
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => Str::random(10),
         'verified'=> $verified = $faker->randomElement([User::USER_VERIFIED,User::USER_NOT_VERIFIED]),
         'verification_token'=> $verified == User::USER_VERIFIED ? null : User::generateVerificationToken(),
+        'role_id'=>Role::all()->random()->id,
+        'reseller'=>$faker->numberBetween(1,500)
     ];
 });
 
@@ -56,10 +58,9 @@ $factory->define(Product::class, function (Faker $faker) {
 
 $factory->define(License::class, function (Faker $faker) {  
     return [
-        
+        'license_key'=>$faker->md5,
         'user_id'=> User::all()->random()->id,
-        'product_id'=> Product::all()->random()->id,
-        'name' => $faker->word,
+        'product_id'=> Product::all()->random()->id,       
         'activation_date' => now(),   
         'expiration_date' => now()->addMonths(1),   
     ];

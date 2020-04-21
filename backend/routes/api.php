@@ -18,12 +18,15 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 }); */
 
-Route::resource('users', 'User\UserController');
+Route::resource('users', 'User\UserController',['except'=>['create','edit']]);
+Route::resource('users.permissions', 'User\UserPermissionController',['only'=>['index']]);
+Route::resource('users.roles', 'User\UserRoleController',['only'=>['index']]);
 
-Route::resource('licenses', 'License\LicenseController');
+Route::resource('licenses', 'License\LicenseController',['only'=>['index','show']]);
 
-Route::resource('permissions', 'Permission\PermissionController');
+Route::resource('permissions', 'Permission\PermissionController',['except'=>['create','edit']]);
 
-Route::resource('products', 'Product\ProductController');
+Route::resource('products', 'Product\ProductController',['only'=>['index','show']]);
 
-Route::resource('roles', 'Role\RoleController');
+Route::resource('roles', 'Role\RoleController',['only'=>['index','show']]);
+Route::resource('roles.permissions', 'Role\RolePermissionController',['only'=>['index']]);

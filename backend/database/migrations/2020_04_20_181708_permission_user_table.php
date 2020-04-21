@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductsTable extends Migration
+class PermissionUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('type');
-            $table->integer('price')->unsigned();
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::create('permission_user', function (Blueprint $table) {
+            $table->foreignId('permission_id')->constrained();
+            $table->foreignId('user_id')->constrained();    
         });
     }
 
@@ -30,6 +26,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('permission_user');
     }
 }
