@@ -15,9 +15,8 @@ class RolePermissionController extends ApiController
      */
     public function index(Role $role)
     {
-        $permissions= $role->permissions;
-        return $this->showAll($permissions); 
+    $permissions= $role->permissions;
+    return $this->showAll($permissions);
     }
 
-  
 }

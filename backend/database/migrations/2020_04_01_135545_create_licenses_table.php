@@ -21,6 +21,7 @@ class CreateLicensesTable extends Migration
             $table->date('activation_date');
             $table->date('expiration_date');
             $table->timestamps();
+            $table->softDeletes();
             
         });
        

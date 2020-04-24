@@ -14,74 +14,35 @@ class UserPermissionController extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function index(User $user)
-    {
+    {       
         $permissions= $user->permissions;
         return $this->showAll($permissions);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\User  $user
+    * @return \Illuminate\Http\Response
+    */
+
+    public function update( Request $request, User $user ) {
+        $rules = [
+            'role_id'=>'required | integer'
+        ];
+        $this->validate( $request, $rules );
+        
+        $user->fill( $request->only( ['role_id'] ) );
+            
+        
+        if ( $user->isClean() ) {
+            return $this->errorResponse( 'Nothing change', 422 );
+        }
+
+        $user->save();
+        return $this->showOne($user);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
-    }
 }

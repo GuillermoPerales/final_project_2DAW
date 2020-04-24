@@ -85,7 +85,7 @@ class Handler extends ExceptionHandler {
         }
 
         if ( $exception instanceof HttpException ) {
-            return $this->errorResponse( $exception->getmenssage(), $exception->getStatusCode() );
+            return $this->errorResponse( $exception->getMessage(), $exception->getStatusCode() );
         }
 
  /*        if ( $exception instanceof QueryException ) {

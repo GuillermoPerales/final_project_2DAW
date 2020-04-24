@@ -19,14 +19,16 @@ use Illuminate\Support\Facades\Route;
 }); */
 
 Route::resource('users', 'User\UserController',['except'=>['create','edit']]);
-Route::resource('users.permissions', 'User\UserPermissionController',['only'=>['index']]);
-Route::resource('users.roles', 'User\UserRoleController',['only'=>['index']]);
+Route::resource('users.permissions', 'User\UserPermissionController',['only'=>['index','update']]);
+Route::resource('users.licenses', 'User\UserLicenseController',['except'=>['show','create','edit']]);
+Route::resource('users.roles', 'User\UserRoleController',['only'=>['index','update']]);
 
 Route::resource('licenses', 'License\LicenseController',['only'=>['index','show']]);
 
 Route::resource('permissions', 'Permission\PermissionController',['except'=>['create','edit']]);
 
 Route::resource('products', 'Product\ProductController',['only'=>['index','show']]);
+Route::resource('products.licenses', 'Product\ProductLicenseController',['only'=>['index']]);
 
 Route::resource('roles', 'Role\RoleController',['only'=>['index','show']]);
 Route::resource('roles.permissions', 'Role\RolePermissionController',['only'=>['index']]);

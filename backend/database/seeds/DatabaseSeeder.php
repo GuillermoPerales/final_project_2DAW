@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
 
         factory(Product::class,50)->create();
         
-        factory(License::class, 100)->create();
+        factory(License::class, 50)->create();
 
     }
 }

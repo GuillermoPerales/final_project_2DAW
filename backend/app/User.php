@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use App\Role;
 use App\Permission;
-use App\Licenses;
+use App\License;
 
 class User extends Authenticatable {
     use Notifiable, SoftDeletes;
@@ -71,15 +71,15 @@ public static function generateVerificationToken(){
     return Str::random(40);
 }
 
-public function rol(){
-    return $this->hasOne(Role::class);
-}
+// public function rol(){
+//     return $this->hasOne(Role::class);
+// }
 
 public function permissions(){
-    return $this->hasMany(Permission::class);
+    return $this->belongsToMany(Permission::class);
 }
 
 public function licenses(){
-    return $this->hasMany(Licenses::class);
+    return $this->hasMany(License::class);
 }
 }
