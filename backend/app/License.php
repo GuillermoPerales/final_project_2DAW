@@ -5,10 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\User;
 use App\Product;
+use App\Transformers\LicenseTransformer;
 
 class License extends Product {
 
     use SoftDeletes;
+
+    public $transformer = LicenseTransformer::class;
+
     protected $dates=['delete_at'];
 
     protected $fillable = [        

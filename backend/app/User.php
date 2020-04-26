@@ -10,12 +10,15 @@ use Illuminate\Support\Str;
 use App\Role;
 use App\Permission;
 use App\License;
+use App\Transformers\UserTransformer;
 
-class User extends Authenticatable {
+class User extends Authenticatable implements MustVerifyEmail {
     use Notifiable, SoftDeletes;
 
     const USER_VERIFIED = '1';
     const USER_NOT_VERIFIED = '0';
+
+    public $transformer = UserTransformer::class;
     
     protected $dates=['delete_at'];
     /**
