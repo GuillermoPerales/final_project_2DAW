@@ -1,0 +1,8 @@
+<ion-list >
+  <div class="search-product">
+    <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" >
+  </div>
+  <ion-item *ngFor="let data of products | filter:searchText">
+    <ion-label>Name:{{data.product_name}}</ion-label>
+  </ion-item>
+</ion-list>

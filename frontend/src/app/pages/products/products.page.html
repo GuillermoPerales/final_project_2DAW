@@ -8,9 +8,12 @@
 </ion-header>
 
 <ion-content padding>
-<ion-menu-toggle>
-  <ion-button expand="full">ToggleMenu</ion-button>
-</ion-menu-toggle>  
 
-<ion-button expand="full" routerLink="/menu/users">Go to Users</ion-button>
+
+
+
+  <ion-button expand="full" routerLink="/menu/users">Go to Users</ion-button>
+
+  <app-products-list [products]="products"></app-products-list>
+
 </ion-content>

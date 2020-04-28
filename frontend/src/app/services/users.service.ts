@@ -14,7 +14,7 @@ export class UsersService {
     return this.apiService.get('/users').pipe(
       map(data => {
         return data
-      })
+            })
     )
   }
 }
