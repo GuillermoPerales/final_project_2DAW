@@ -14,7 +14,7 @@ export class ProductsPage implements OnInit {
 
   ngOnInit () {
     this.porductsService.getAll().subscribe(res => {
-      //console.log(res)
+      console.log(res)
       this.products = res['data']
     })
   

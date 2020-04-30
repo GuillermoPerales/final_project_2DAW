@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         DB::table('permission_user')->truncate();
         License::truncate();
     
-        factory(Permission::class,20)->create();
+        factory(Permission::class,10)->create();
         
         factory(Role::class,5)->create()->each(
             function($role){
@@ -36,11 +36,11 @@ class DatabaseSeeder extends Seeder
             }
         );
 
-        factory(User::class, 20)->create();
+        factory(User::class, 10)->create();
 
-        factory(Product::class,50)->create();
+        factory(Product::class,20)->create();
         
-        factory(License::class, 50)->create();
+        factory(License::class, 10)->create();
 
     }
 }

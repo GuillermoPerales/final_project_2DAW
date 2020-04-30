@@ -1,8 +1,14 @@
-<ion-list >
-  <div class="search-product">
-    <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" >
-  </div>
-  <ion-item *ngFor="let data of products | filter:searchText">
-    <ion-label>Name:{{data.product_name}}</ion-label>
+<ion-list>
+  <ion-searchbar class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off">
+  </ion-searchbar>
+  <ion-item color="primary">
+    <ion-label>Name</ion-label>
+    <ion-label>Type</ion-label>
+    <ion-label>Price</ion-label>
+  </ion-item>
+  <ion-item *ngFor="let data of products |filter:searchText">
+    <ion-label>{{data.product_name}}</ion-label>
+    <ion-label>{{data.product_type}}</ion-label>
+    <ion-label>{{data.product_price}}</ion-label>
   </ion-item>
 </ion-list>
