@@ -10,8 +10,8 @@ import { AppComponent } from './app.component'
 import { AppRoutingModule } from './app-routing.module'
 import { HttpClientModule } from '@angular/common/http'
 import { Ng2SearchPipeModule } from 'ng2-search-filter'
-import {IonicStorageModule} from '@ionic/storage'
-
+import { IonicStorageModule } from '@ionic/storage'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +23,8 @@ import {IonicStorageModule} from '@ionic/storage'
     HttpClientModule,
     Ng2SearchPipeModule,
     IonicStorageModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     StatusBar,

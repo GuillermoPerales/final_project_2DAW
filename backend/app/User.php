@@ -11,9 +11,10 @@ use App\Role;
 use App\Permission;
 use App\License;
 use App\Transformers\UserTransformer;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail {
-    use Notifiable, SoftDeletes;
+    use Notifiable, SoftDeletes, HasApiTokens;
 
     const USER_VERIFIED = '1';
     const USER_NOT_VERIFIED = '0';
