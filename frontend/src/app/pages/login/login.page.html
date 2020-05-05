@@ -1,36 +1,36 @@
-<ion-content>
-<ion-card>
-  <ion-card-header>
-   
-    <ion-card-title>LOGIN</ion-card-title>
-  </ion-card-header>
-
-  <ion-card-content>
-  <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <ion-item>
-      <ion-label position="floating" color="primary">Email</ion-label>
-      <ion-input type="text" formControlName="email" class="form-controll" required></ion-input>
-    </ion-item>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of validationErrors.email">
-        <div class="error-message" *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
-          {{ validation.message }}
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>LOGIN</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <ion-item>
+          <ion-label position="floating" color="primary">Email</ion-label>
+          <ion-input type="text" formControlName="email" required></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validationErrors.email">
+            <div class="error-message"
+              *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
         </div>
-      </ng-container>
-    </div>
-    <ion-item>
-      <ion-label position="floating" color="primary">Password</ion-label>
-      <ion-input type="text" formControlName="password" class="form-controll" required></ion-input>
-    </ion-item>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of validationErrors.password">
-        <div class="error-message" *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
-          {{ validation.message }}
+        <ion-item>
+          <ion-label position="floating" color="primary">Password</ion-label>
+          <ion-input type="password" formControlName="password" required></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validationErrors.password">
+            <div class="error-message"
+              *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
         </div>
-      </ng-container>
-    </div>
-  <ion-button color="warning" type="submit" [disabled]="!loginForm.valid" >Login</ion-button>
-</form>
-  </ion-card-content>
-</ion-card>
+        <ion-button color="warning" type="submit" [disabled]="!loginForm.valid">Login</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

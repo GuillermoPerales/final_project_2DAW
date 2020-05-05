@@ -8,12 +8,12 @@ export class AlertService {
 
   constructor(private toastController:ToastController) { }
 
-  async presentToast(message: any) {
+  async presentToast(message: any, color) {
     const toast = await this.toastController.create({
       message: message,
       duration: 2000,
       position: 'top',
-      color: 'dark'
+      color: color
     });
     toast.present();
   }

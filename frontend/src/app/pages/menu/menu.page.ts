@@ -35,4 +35,7 @@ export class MenuPage implements OnInit {
   logout () {
     this.authService.logout()
   }
+  user(){
+  this.authService.user()
+  }
 }

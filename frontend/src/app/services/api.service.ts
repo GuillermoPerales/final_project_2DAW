@@ -32,7 +32,7 @@ export class ApiService {
   }
 
   post (path: string, body: Object = {}): Observable<any> {
-    console.log(`${environment.api_url}${path}`, body)
+    //console.log(`${environment.api_url}${path}`, body)
     return this.http
       .post(`${environment.api_url}${path}`, body)
       .pipe(catchError(this.formatErrors))

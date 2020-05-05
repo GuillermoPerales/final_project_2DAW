@@ -27,19 +27,15 @@ class DatabaseSeeder extends Seeder
         DB::table('permission_user')->truncate();
         License::truncate();
     
-        factory(Permission::class,10)->create();
-        
+        factory(Permission::class,10)->create();        
         factory(Role::class,5)->create()->each(
             function($role){
                 $permissions = Permission::all()->random(rand(1,10))->pluck('id');
                 $role->permissions()->attach($permissions);
             }
         );
-
         factory(User::class, 10)->create();
-
-        factory(Product::class,20)->create();
-        
+        factory(Product::class,20)->create();        
         factory(License::class, 10)->create();
 
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { AuthenticationService } from 'src/app/services/authentication.service'
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
+import { subscribeOn } from 'rxjs/operators';
 
 
 @Component({
@@ -34,15 +35,14 @@ export class LoginPage implements OnInit {
       Validators.minLength(6)
     ])]
   });
-
-
 }
 
   ngOnInit () {}
 
 
   login () {
-   // console.log(this.loginForm.value)
    this.authService.login(this.loginForm.value)
   }
+
+  
 }

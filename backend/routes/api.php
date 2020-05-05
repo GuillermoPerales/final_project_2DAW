@@ -27,8 +27,7 @@ Route::group([
       ], function() {
           Route::get('logout', 'Auth\AuthController@logout');
           Route::get('user', 'Auth\AuthController@user');
-      });
-   
+      });   
 });
 
 Route::resource('users', 'User\UserController',['except'=>['create','edit']]);
