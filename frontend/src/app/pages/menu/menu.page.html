@@ -8,7 +8,7 @@
         <ion-title>Menu</ion-title>
         <ion-buttons slot="end">
           <ion-button color="danger" (click)="logout()">Logout</ion-button>
-          <ion-button color="green" (click)="user()">user</ion-button>
+          <ion-item color="tertiary"*ngIf="currentUser" >{{currentUser.name}}</ion-item>
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
       </ion-toolbar>

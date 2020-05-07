@@ -48,8 +48,8 @@ class UserController extends ApiController {
         $fields['password'] = bcrypt( $request->password );
         $fields['verified'] = User::USER_NOT_VERIFIED;
         $fields['verification_token'] = User::generateVerificationToken();
-        $fields['role_id'] =1;
-        $fields['reseller'] =0;
+        $fields['role_id'] = 1;
+        $fields['reseller'] = 0;
 
         $user = User::create( $fields );
 
@@ -63,7 +63,8 @@ class UserController extends ApiController {
     * @return \Illuminate\Http\Response
     */
 
-    public function show( User $user ) {      
+    public function show( User $user ) {
+
         return $this->showOne( $user );
     }
 
@@ -87,7 +88,7 @@ class UserController extends ApiController {
     */
 
     public function update( Request $request, User $user ) {
-      
+
         $rules = [
             'email'=> '|email|unique:users,email,'. $user->id,
             'password'=> '|min:6|confirmed',
@@ -128,5 +129,17 @@ class UserController extends ApiController {
     public function destroy( User $user ) {
         $user->delete();
         return $this->showOne( $user );
+    }
+
+    /**
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+
+    public function resellers( $reseller ) {
+        $resellers = User::all()->where( 'reseller', $reseller )->where('role_id','<>',1);
+        return $this->showAll( $resellers );
     }
 }

@@ -1,0 +1,13 @@
+<ion-list>
+
+  <ion-item color="primary">
+    <ion-label>Name</ion-label>
+    <ion-label>Email</ion-label>
+    <ion-label>Rol</ion-label>
+  </ion-item>
+  <ion-item *ngFor="let user of resellers">
+    <ion-label>{{user.user_name}}</ion-label>
+    <ion-label>{{user.user_email}}</ion-label>
+    <ion-label>{{user.role}}</ion-label>
+  </ion-item>
+</ion-list>

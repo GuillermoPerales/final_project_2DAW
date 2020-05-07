@@ -30,6 +30,7 @@ Route::group([
       });   
 });
 
+Route::get('resellers/{reseller}', 'User\UserController@resellers');
 Route::resource('users', 'User\UserController',['except'=>['create','edit']]);
 Route::resource('users.permissions', 'User\UserPermissionController',['only'=>['index','update']]);
 Route::resource('users.licenses', 'User\UserLicenseController',['except'=>['show','create','edit']]);

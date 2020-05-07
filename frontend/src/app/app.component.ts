@@ -25,10 +25,11 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault()
       this.splashScreen.hide()
-
+    
       this.authService.authenticationState.subscribe(state => {
         if (state) {
           this.router.navigate(['menu'])
+          
         } else {
           this.router.navigate(['login'])
         }

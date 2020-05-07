@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject, Observable, of } from 'rxjs'
 import { Storage } from '@ionic/storage'
 import { Platform } from '@ionic/angular'
 import { ApiService } from './api.service'
@@ -7,6 +7,7 @@ import { map, tap } from 'rxjs/operators'
 import { AlertService } from './alert.service'
 import { HttpHeaders, HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment'
+import { Users } from '../interfaces/users'
 
 const TOKEN_KEY = 'auth-token'
 
@@ -15,7 +16,7 @@ const TOKEN_KEY = 'auth-token'
 })
 export class AuthenticationService {
   token
-
+  private currentUser: Users
   authenticationState = new BehaviorSubject(false)
 
   constructor (
@@ -31,33 +32,56 @@ export class AuthenticationService {
   }
 
   login (data) {
-    // return this.apiService.post('/auth/login', data).subscribe(
-    //   token => {
-    //     this.storage.set(TOKEN_KEY, token).then(
-    //       () => {
-    //         this.alertService.presentToast('Logged In', 'success')
-    //         console.log('Token Stored')
-    //       },
-    //       error => console.error('Error storing item', error)
-    //     )
-    //     this.token = token
-    //     this.authenticationState.next(true)
-    //     return token
-    //   },
-    //   error => {
-    //     this.alertService.presentToast('Error: ' + error.message, 'danger')
-    //   }
+    return this.apiService.post('/auth/login', data).pipe(
+      tap(token => {
+        this.storage.set(TOKEN_KEY, token)
+        .then(
+          () => {
+            this.alertService.presentToast('Logged In', 'success')
+            console.log('Token Stored');
+          },
+          error => console.error('Error storing item', error)
+        );
+        this.token = token;
+        this.authenticationState.next(true)
+        return token;
+      },error=>{
+        this.alertService.presentToast('Error: ' + error.message, 'danger')
+      }),
+    );
+    // pipe(
+    //   tap(
+    //     token => {
+    //       this.storage.set(TOKEN_KEY, token).then(
+    //         () => {
+    //           this.alertService.presentToast('Logged In', 'success')
+    //           console.log('Token Stored')
+    //         },
+    //         error => console.error('Error storing item', error)
+    //       )
+    //       this.token = token
+    //       this.authenticationState.next(true)
+    //       return token
+    //     },
+    //     error => {
+    //       this.alertService.presentToast('Error: ' + error.message, 'danger')
+    //     }
+    //   )
     // )
 
-    return this.storage.set(TOKEN_KEY, 'Guillermo').then(res=>{
-      this.authenticationState.next(true);
-    });
+    // return this.storage.set(TOKEN_KEY, 'Guillermo').then(res=>{
+    //   this.authenticationState.next(true);
+    // });
   }
 
   logout () {
-    this.alertService.presentToast('Logged out', 'primary')
     return this.storage.remove(TOKEN_KEY).then(() => {
       this.authenticationState.next(false)
+      this.alertService.presentToast('Logged out', 'primary')
+      this.storage.remove('token')
+      this.storage.remove('user')
+      delete this.token
+      delete this.currentUser
     })
   }
 
@@ -69,6 +93,7 @@ export class AuthenticationService {
     return this.storage.get(TOKEN_KEY).then(res => {
       if (res) {
         this.token = res
+        this.getUser()
         this.authenticationState.next(true)
       } else {
         delete this.token
@@ -78,18 +103,22 @@ export class AuthenticationService {
     })
   }
 
-  user () {
-    if (this.checkToken()) {
+  getUser () {  
       const headers = new HttpHeaders({
         Authorization:
           this.token['token_type'] + ' ' + this.token['access_token']
       })
       return this.http
-        .get(environment.api_url + '/auth/user', { headers: headers })
-        .subscribe(user => {
-          console.log(user)
-          return user
-        })
-    }
+        .get<Users>(environment.api_url + '/auth/user', { headers: headers })
+        .subscribe(
+          (user) => {
+            console.log(user)
+            this.storage.set('user', user);
+          },
+          (error) =>{
+            console.error(error);
+          }
+        )    
+    
   }
 }
