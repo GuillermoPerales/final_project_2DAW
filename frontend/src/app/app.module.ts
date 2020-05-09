@@ -13,6 +13,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter'
 import { IonicStorageModule } from '@ionic/storage'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -24,7 +25,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     Ng2SearchPipeModule,
     IonicStorageModule.forRoot(),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    
   ],
   providers: [
     StatusBar,

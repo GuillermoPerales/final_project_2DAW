@@ -1,0 +1,9 @@
+.tablaUsuarios ion-row:not(:last-child) {
+    border-bottom: 1px solid lightgray;
+  }
+  
+  ion-row {
+    background-color: white;
+    align-items: center;
+  }
+  

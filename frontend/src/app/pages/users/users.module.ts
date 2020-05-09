@@ -1,22 +1,19 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular'
 
-import { UsersPageRoutingModule } from './users-routing.module';
+import { UsersPageRoutingModule } from './users-routing.module'
 
-import { UsersPage } from './users.page';
-import { UsersListComponent } from 'src/app/components/users-list/users-list.component';
+import { UsersPage } from './users.page'
+import { UsersListComponent } from 'src/app/components/users-list/users-list.component'
+import { UsersAdminComponent } from 'src/app/components/users-admin/users-admin.component'
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    UsersPageRoutingModule
-  ],
-  declarations: [UsersPage,UsersListComponent]
+  imports: [CommonModule, FormsModule,ReactiveFormsModule, IonicModule, UsersPageRoutingModule],
+  declarations: [UsersPage, UsersListComponent,UsersAdminComponent],
+  entryComponents:[UsersAdminComponent]
 })
 export class UsersPageModule {}

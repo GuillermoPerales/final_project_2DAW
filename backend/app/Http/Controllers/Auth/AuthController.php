@@ -35,20 +35,23 @@ class AuthController extends ApiController {
     }
 
     public function register( Request $request ) {
+      
         $rules = [
-            'name'=> 'required',
+            'username'=> 'required',
             'email'=> 'required|email|unique:users',
             'password'=> 'required|min:6|confirmed',
+            'reseller'=>'required',
         ];
 
         $this->validate( $request, $rules );
 
-        $fields = $request->all();
+        $fields = $request->except(['username']);
+        $fields['name']=$request['username'];
         $fields['password'] = bcrypt( $request->password );
         $fields['verified'] = User::USER_NOT_VERIFIED;
         $fields['verification_token'] = User::generateVerificationToken();
-        $fields['role_id'] = 1;
-        $fields['reseller'] = 0;
+        $fields['role_id'] = 3;
+        $fields['reseller'] = $request->reseller;
 
         $user = User::create( $fields );
 

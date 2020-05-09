@@ -38,10 +38,8 @@ export class MenuPage implements OnInit {
   ngOnInit () {    
     this.authService.checkToken().then(res=>{
       this.storage.get('user').then(val=>{
-        this.currentUser=val
-        console.log(val)
+        this.currentUser=val       
       })
-
     }
     )
   }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { AuthenticationService } from 'src/app/services/authentication.service'
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
-import { subscribeOn } from 'rxjs/operators'
 import { NavController } from '@ionic/angular'
 
 @Component({
@@ -39,6 +38,7 @@ export class LoginPage implements OnInit {
   ngOnInit () {}
 
   login () {
+    console.log(this.loginForm.value)
     this.authService.login(this.loginForm.value).subscribe(
       data => {
         console.log(data)
