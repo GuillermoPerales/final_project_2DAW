@@ -35,16 +35,19 @@ export class MenuPage implements OnInit {
     })
   }
 
-  ngOnInit () {    
-    this.authService.checkToken().then(res=>{
-      this.storage.get('user').then(val=>{
-        this.currentUser=val       
-      })
-    }
-    )
+  ngOnInit () {
+    this.authService.checkToken().then(()=>{
+      this.authService.getUser().subscribe(res => {
+        this.currentUser = res
+        console.log(res)
+      })      
+    })  
   }
 
   logout () {
-    this.authService.logout()
+    
+    this.authService.logout().subscribe(res=>{
+      delete this.currentUser
+    })
   }
 }

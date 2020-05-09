@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 import { BehaviorSubject, Observable, of } from 'rxjs'
 import { Storage } from '@ionic/storage'
-import { Platform } from '@ionic/angular'
 import { ApiService } from './api.service'
 import { map, tap } from 'rxjs/operators'
 import { AlertService } from './alert.service'
@@ -21,14 +20,11 @@ export class AuthenticationService {
 
   constructor (
     private storage: Storage,
-    private platform: Platform,
     private apiService: ApiService,
     private alertService: AlertService,
     private http: HttpClient
   ) {
-    this.platform.ready().then(() => {
-      this.checkToken()
-    })
+  
   }
 
   login (data) {
@@ -54,14 +50,22 @@ export class AuthenticationService {
   }
 
   logout () {
-    return this.storage.remove(TOKEN_KEY).then(() => {
-      this.authenticationState.next(false)
-      this.alertService.presentToast('Logged out', 'primary')
-      this.storage.remove('token')
-      this.storage.remove('user')
-      delete this.token
-      delete this.currentUser
+    const headers = new HttpHeaders({
+      Authorization: this.token['token_type'] + ' ' + this.token['access_token']
     })
+    return this.http
+      .get<Users>(environment.api_url + '/auth/logout', { headers: headers })
+    .pipe(
+      tap(data => {
+        this.storage.remove(TOKEN_KEY);
+        this.storage.remove('user');
+        this.authenticationState.next(false);
+        delete this.token;
+        delete this.currentUser;
+        this.alertService.presentToast('Logged out', 'primary')
+        return data;
+      })
+    ) 
   }
 
   isAuthenticated () {
@@ -72,7 +76,7 @@ export class AuthenticationService {
     return this.storage.get(TOKEN_KEY).then(res => {
       if (res) {
         this.token = res
-        this.getUser()
+       // this.getUser()
         this.authenticationState.next(true)
       } else {
         delete this.token
@@ -88,14 +92,15 @@ export class AuthenticationService {
     })
     return this.http
       .get<Users>(environment.api_url + '/auth/user', { headers: headers })
-      .subscribe(
-        user => {
+      .pipe(
+        tap (user => {
           this.storage.set('user', user)
+          return user
         },
         error => {
           console.error(error)
         }
-      )
+      ))
   }
 
   register (data) {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { Platform } from '@ionic/angular'
+import { Platform, NavController } from '@ionic/angular'
 import { SplashScreen } from '@ionic-native/splash-screen/ngx'
 import { StatusBar } from '@ionic-native/status-bar/ngx'
 import { AuthenticationService } from './services/authentication.service'
@@ -16,7 +16,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authService: AuthenticationService,
-    private router: Router
+    private navCtrl: NavController
   ) {
     this.initializeApp()
   }
@@ -25,13 +25,13 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault()
       this.splashScreen.hide()
-    
+    this.authService.checkToken()
       this.authService.authenticationState.subscribe(state => {
         if (state) {
-          this.router.navigate(['menu'])
+          this.navCtrl.navigateRoot(['menu'])
           
         } else {
-          this.router.navigate(['login'])
+          this.navCtrl.navigateRoot(['login'])
         }
       })
     })
