@@ -23,9 +23,7 @@ export class AuthenticationService {
     private apiService: ApiService,
     private alertService: AlertService,
     private http: HttpClient
-  ) {
-  
-  }
+  ) {}
 
   login (data) {
     return this.apiService.post('/auth/login', data).pipe(
@@ -55,17 +53,17 @@ export class AuthenticationService {
     })
     return this.http
       .get<Users>(environment.api_url + '/auth/logout', { headers: headers })
-    .pipe(
-      tap(data => {
-        this.storage.remove(TOKEN_KEY);
-        this.storage.remove('user');
-        this.authenticationState.next(false);
-        delete this.token;
-        delete this.currentUser;
-        this.alertService.presentToast('Logged out', 'primary')
-        return data;
-      })
-    ) 
+      .pipe(
+        tap(data => {
+          this.storage.remove(TOKEN_KEY)
+          this.storage.remove('user')
+          this.authenticationState.next(false)
+          delete this.token
+          delete this.currentUser
+          this.alertService.presentToast('Logged out', 'primary')
+          return data
+        })
+      )
   }
 
   isAuthenticated () {
@@ -76,7 +74,7 @@ export class AuthenticationService {
     return this.storage.get(TOKEN_KEY).then(res => {
       if (res) {
         this.token = res
-       // this.getUser()
+        // this.getUser()
         this.authenticationState.next(true)
       } else {
         delete this.token
@@ -93,17 +91,25 @@ export class AuthenticationService {
     return this.http
       .get<Users>(environment.api_url + '/auth/user', { headers: headers })
       .pipe(
-        tap (user => {
-          this.storage.set('user', user)
-          return user
-        },
-        error => {
-          console.error(error)
-        }
-      ))
+        tap(
+          user => {
+            this.storage.set('user', user)
+            return user
+          },
+          error => {
+            console.error(error)
+          }
+        )
+      )
   }
 
   register (data) {
     return this.apiService.post('/auth/register', data)
+  }
+  updateUser (id, data) {
+    console.log(id, data)
+    return this.apiService.put('/users/'+id,data).subscribe(res=>{
+      console.log(res)
+    })
   }
 }

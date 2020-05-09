@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular'
 import { UsersAdminComponent } from '../users-admin/users-admin.component'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthenticationService } from 'src/app/services/authentication.service'
+import { ApiService } from 'src/app/services/api.service'
 
 @Component({
   selector: 'app-users-list',
@@ -24,13 +25,15 @@ export class UsersListComponent implements OnInit {
     password: [
       { type: 'required', message: 'Password is required' },
       { type: 'minLength', message: 'Password must be at least 6 characters' }
-    ]
+    ],
+    role: [{ type: 'required', message: 'Role is required' }],
   }
 
   constructor (
     private modalController: ModalController,
     private formBuilder: FormBuilder,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private apiService:ApiService
   ) {
     this.newUserForm = this.formBuilder.group(
       {
@@ -43,7 +46,8 @@ export class UsersListComponent implements OnInit {
           '',
           Validators.compose([Validators.required, Validators.minLength(6)])
         ],
-        password_confirmation: ['', Validators.required]
+        password_confirmation: ['', Validators.required],
+        role:['',Validators.required]
       },
       { validators: this.password.bind(this) }
     )
@@ -71,7 +75,9 @@ export class UsersListComponent implements OnInit {
     )
   }
 
-  deleteUser (id) {}
+  deleteUser (id) {
+    this.apiService.delete('/users/'+id).subscribe(res=>{console.log(res)})
+  }
 
   async userAdminModal (user) {
     const modal = await this.modalController.create({

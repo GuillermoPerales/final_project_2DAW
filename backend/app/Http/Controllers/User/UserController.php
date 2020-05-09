@@ -88,26 +88,28 @@ class UserController extends ApiController {
     */
 
     public function update( Request $request, User $user ) {
-
+  
         $rules = [
-            'email'=> '|email|unique:users,email,'. $user->id,
-            'password'=> '|min:6|confirmed',
-
+            'user_email'=> '|email|unique:users,email,'. $user->id,           
         ];
         $this->validate( $request, $rules );
 
-        if ( $request->has( 'name' ) ) {
-            $user->name = $request->name;
+        if ( $request->has( 'user_name' ) ) {
+            $user->name = $request->user_name;
         }
 
-        if ( $request->has( 'email' ) && $user->email != $request->email ) {
+        if ( $request->has( 'user_email' ) && $user->email != $request->user_email ) {
             $user->verified = User::USER_NOT_VERIFIED;
             $user->verification_token = User::generateVerificationToken();
-            $user->email = $request->email;
+            $user->email = $request->user_email;
         }
 
         if ( $request->has( 'password' ) ) {
             $user->password = bcrypt( $request->password );
+        }
+
+        if ( $request->has( 'role' ) ) {
+            $user->role_id = $request->role;
         }
 
         if ( !$user->isDirty() ) {

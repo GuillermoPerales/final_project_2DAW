@@ -50,7 +50,7 @@ class AuthController extends ApiController {
         $fields['password'] = bcrypt( $request->password );
         $fields['verified'] = User::USER_NOT_VERIFIED;
         $fields['verification_token'] = User::generateVerificationToken();
-        $fields['role_id'] = 3;
+        $fields['role_id'] =$request['role'];
         $fields['reseller'] = $request->reseller;
 
         $user = User::create( $fields );
