@@ -108,7 +108,7 @@ export class AuthenticationService {
   }
   updateUser (id, data) {
     console.log(id, data)
-    return this.apiService.put('/users/'+id,data).subscribe(res=>{
+    return this.apiService.put('/users/' + id, data).subscribe(res => {
       console.log(res)
     })
   }

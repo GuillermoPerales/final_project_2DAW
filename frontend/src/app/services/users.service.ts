@@ -4,6 +4,7 @@ import { Observable } from 'rxjs'
 import { Users } from '../interfaces/users'
 import { map } from 'rxjs/operators'
 import { AuthenticationService } from './authentication.service'
+import { Roles } from '../interfaces/roles'
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +18,11 @@ export class UsersService {
         return data
             })
     )
+  }
+  getAllRoles():Observable<[Roles]>{
+    return this.apiService.get('/roles').pipe(map(data=>{
+      console.log(data)
+      return data
+    }))
   }
 }

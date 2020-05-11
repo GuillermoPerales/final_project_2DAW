@@ -25,11 +25,10 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault()
       this.splashScreen.hide()
-    this.authService.checkToken()
+      this.authService.checkToken()
       this.authService.authenticationState.subscribe(state => {
         if (state) {
           this.navCtrl.navigateRoot(['menu'])
-          
         } else {
           this.navCtrl.navigateRoot(['login'])
         }

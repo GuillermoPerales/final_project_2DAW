@@ -26,28 +26,22 @@ export class UsersListComponent implements OnInit {
       { type: 'required', message: 'Password is required' },
       { type: 'minLength', message: 'Password must be at least 6 characters' }
     ],
-    role: [{ type: 'required', message: 'Role is required' }],
+    role: [{ type: 'required', message: 'Role is required' }]
   }
 
   constructor (
     private modalController: ModalController,
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
-    private apiService:ApiService
+    private apiService: ApiService
   ) {
     this.newUserForm = this.formBuilder.group(
       {
         username: ['', Validators.required],
-        email: [
-          '',
-          Validators.compose([Validators.required, Validators.email])
-        ],
-        password: [
-          '',
-          Validators.compose([Validators.required, Validators.minLength(6)])
-        ],
+        email: ['', Validators.compose([Validators.required, Validators.email])],
+        password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
         password_confirmation: ['', Validators.required],
-        role:['',Validators.required]
+        role: ['', Validators.required]
       },
       { validators: this.password.bind(this) }
     )
@@ -61,8 +55,8 @@ export class UsersListComponent implements OnInit {
     return password === confirmPassword ? null : { passwordNotMatch: true }
   }
   submit () {
-    let data=this.newUserForm.value
-    data['reseller']=this.resellerId
+    let data = this.newUserForm.value
+    data['reseller'] = this.resellerId
     console.log(data)
     this.authService.register(data).subscribe(
       data => {
@@ -76,7 +70,9 @@ export class UsersListComponent implements OnInit {
   }
 
   deleteUser (id) {
-    this.apiService.delete('/users/'+id).subscribe(res=>{console.log(res)})
+    this.apiService.delete('/users/' + id).subscribe(res => {
+      console.log(res)
+    })
   }
 
   async userAdminModal (user) {

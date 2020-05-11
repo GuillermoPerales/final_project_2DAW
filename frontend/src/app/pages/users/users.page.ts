@@ -26,11 +26,11 @@ export class UsersPage implements OnInit {
       this.currentUser = val
       this.resellerId=val.reseller
       this.getResellers()
-    })
-  
+    })  
   }
+
   getResellers(){
-    this.userService.getAll(this.currentUser.reseller).subscribe(res => {
+    this.userService.getAll(this.resellerId).subscribe(res => {
       this.resellers = res['data']
     })
   }

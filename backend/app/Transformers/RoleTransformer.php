@@ -33,6 +33,7 @@ class RoleTransformer extends TransformerAbstract
     public function transform(Role $role)
     {
         return [
+            'role_id'=>(int)$role->id,
             'role_name'=>(string)$role->name
         ];
     }
