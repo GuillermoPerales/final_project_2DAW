@@ -5,35 +5,35 @@ namespace App\Transformers;
 use League\Fractal\TransformerAbstract;
 use App\Permission;
 
-class PermissionTransformer extends TransformerAbstract
-{
+class PermissionTransformer extends TransformerAbstract {
     /**
-     * List of resources to automatically include
-     *
-     * @var array
-     */
+    * List of resources to automatically include
+    *
+    * @var array
+    */
     protected $defaultIncludes = [
         //
     ];
-    
+
     /**
-     * List of resources possible to include
-     *
-     * @var array
-     */
+    * List of resources possible to include
+    *
+    * @var array
+    */
     protected $availableIncludes = [
         //
     ];
-    
+
     /**
-     * A Fractal transformer.
-     *
-     * @return array
-     */
-    public function transform(Permission $permission)
-    {
+    * A Fractal transformer.
+    *
+    * @return array
+    */
+
+    public function transform( Permission $permission ) {
         return [
-           'permission_name'=>(string)$permission->name,
+            'permission_id'=>( int )$permission->id,
+            'permission_name'=>( string )$permission->name,
         ];
     }
 }

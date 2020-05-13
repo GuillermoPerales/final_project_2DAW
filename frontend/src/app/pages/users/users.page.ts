@@ -34,5 +34,13 @@ export class UsersPage implements OnInit {
       this.resellers = res['data']
     })
   }
+  userChange(event){
+    console.log(event)
+    this.getResellers()
+  }  
+  userUpdate(event){
+    console.log(event)
+    this.getResellers()
+  }
 
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\ApiController;
 use App\User;
+use App\Permission;
 use Illuminate\Http\Request;
 
 class UserPermissionController extends ApiController
@@ -28,21 +29,25 @@ class UserPermissionController extends ApiController
     * @return \Illuminate\Http\Response
     */
 
-    public function update( Request $request, User $user ) {
-        $rules = [
-            'role_id'=>'required | integer'
-        ];
-        $this->validate( $request, $rules );
+    public function update(User $user,Permission $permission ) {       
         
-        $user->fill( $request->only( ['role_id'] ) );
-            
-        
-        if ( $user->isClean() ) {
-            return $this->errorResponse( 'Nothing change', 422 );
-        }
+        $user->permissions()->syncWithoutDetaching($permission);  
 
         $user->save();
-        return $this->showOne($user);
+        return $this->showAll($user->permissions);
     }
 
+       /**
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+
+    public function destroy( User $user, Permission $permission ) {
+        $user->permissions()->detach($permission);  
+
+        $user->save();
+        return $this->showAll($user->permissions);
+    }
 }

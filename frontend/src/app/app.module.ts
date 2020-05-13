@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { Ng2SearchPipeModule } from 'ng2-search-filter'
 import { IonicStorageModule } from '@ionic/storage'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { DragulaModule } from 'ng2-dragula';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     IonicStorageModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
+    DragulaModule.forRoot()
     
   ],
   providers: [

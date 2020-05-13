@@ -1,10 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { Users } from 'src/app/interfaces'
 import { ModalController } from '@ionic/angular'
 import { UsersAdminComponent } from '../users-admin/users-admin.component'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthenticationService } from 'src/app/services/authentication.service'
 import { ApiService } from 'src/app/services/api.service'
+import { PermissionsAdminComponent } from '../permissions-admin/permissions-admin.component'
+import { DragulaService } from 'ng2-dragula'
 
 @Component({
   selector: 'app-users-list',
@@ -14,6 +16,7 @@ import { ApiService } from 'src/app/services/api.service'
 export class UsersListComponent implements OnInit {
   @Input() resellers: [Users]
   @Input() resellerId
+  @Output() userChange: EventEmitter<Users> = new EventEmitter<Users>()
 
   newUserForm
   validationErrors = {
@@ -33,13 +36,20 @@ export class UsersListComponent implements OnInit {
     private modalController: ModalController,
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private dragulaService:DragulaService
   ) {
     this.newUserForm = this.formBuilder.group(
       {
         username: ['', Validators.required],
-        email: ['', Validators.compose([Validators.required, Validators.email])],
-        password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+        email: [
+          '',
+          Validators.compose([Validators.required, Validators.email])
+        ],
+        password: [
+          '',
+          Validators.compose([Validators.required, Validators.minLength(6)])
+        ],
         password_confirmation: ['', Validators.required],
         role: ['', Validators.required]
       },
@@ -54,13 +64,13 @@ export class UsersListComponent implements OnInit {
     const { value: confirmPassword } = newUserForm.get('password_confirmation')
     return password === confirmPassword ? null : { passwordNotMatch: true }
   }
-  submit () {
+  onCreateUser () {
     let data = this.newUserForm.value
     data['reseller'] = this.resellerId
     console.log(data)
     this.authService.register(data).subscribe(
-      data => {
-        console.log(data)
+      res => {
+        this.userChange.emit(res.data)
       },
       error => {
         console.log(error)
@@ -69,10 +79,14 @@ export class UsersListComponent implements OnInit {
     )
   }
 
-  deleteUser (id) {
+  onDeleteUser (id) {
     this.apiService.delete('/users/' + id).subscribe(res => {
-      console.log(res)
+      this.userChange.emit(res.data)
     })
+  }
+  userUpdate (user) {
+    console.log('afsfa')
+    this.userChange.emit(user)
   }
 
   async userAdminModal (user) {
@@ -83,7 +97,26 @@ export class UsersListComponent implements OnInit {
       },
       showBackdrop: true
     })
-
     await modal.present()
+   await modal.onDidDismiss().then((res)=>{
+      this.userUpdate(res.data)
+
+    })
   }
+
+  async permissionsAdminModal (user) {
+    const modal = await this.modalController.create({
+      component: PermissionsAdminComponent,
+      componentProps: {
+        user: user
+      },
+      showBackdrop: true
+    })
+    await modal.present()
+   await modal.onDidDismiss().then((res)=>{
+      this.dragulaService.destroy('bag')
+
+    })
+  }
+  
 }

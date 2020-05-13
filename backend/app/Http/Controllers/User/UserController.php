@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\User;
+use App\Role;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 
@@ -49,7 +50,7 @@ class UserController extends ApiController {
         $fields['verified'] = User::USER_NOT_VERIFIED;
         $fields['verification_token'] = User::generateVerificationToken();
         $fields['role_id'] = 1;
-        $fields['reseller'] = 0;
+        $fields['reseller'] = 1;
 
         $user = User::create( $fields );
 
@@ -88,9 +89,9 @@ class UserController extends ApiController {
     */
 
     public function update( Request $request, User $user ) {
-  
+
         $rules = [
-            'user_email'=> '|email|unique:users,email,'. $user->id,           
+            'user_email'=> '|email|unique:users,email,'. $user->id,
         ];
         $this->validate( $request, $rules );
 
@@ -109,9 +110,13 @@ class UserController extends ApiController {
         }
 
         if ( $request->has( 'role' ) ) {
+            $user->permissions()->detach();
             $user->role_id = $request->role;
-        }
+            $permissions = Role::find( $request->role)->permissions()->pluck( 'id' );
+            $user->permissions()->attach( $permissions );
 
+        }
+        
         if ( !$user->isDirty() ) {
             return $this->errorResponse( 'Nothing change', 422 );
         }
@@ -141,7 +146,7 @@ class UserController extends ApiController {
     */
 
     public function resellers( $reseller ) {
-        $resellers = User::all()->where( 'reseller', $reseller )->where('role_id','<>',1);
+        $resellers = User::all()->where( 'reseller', $reseller )->where( 'role_id', '<>', 1 );
         return $this->showAll( $resellers );
     }
 }

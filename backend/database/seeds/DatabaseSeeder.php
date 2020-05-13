@@ -35,6 +35,11 @@ class DatabaseSeeder extends Seeder
             }
         );
         factory(User::class, 10)->create();
+        foreach(User::all()as $user){
+            $rol=$user->role_id;
+            $permissions=Role::find($rol)->permissions()->pluck('id');
+            $user->permissions()->attach($permissions);
+        };
         factory(Product::class,20)->create();        
         factory(License::class, 10)->create();
 

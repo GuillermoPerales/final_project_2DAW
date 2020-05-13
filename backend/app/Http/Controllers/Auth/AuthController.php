@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Auth;
 use App\User;
+use App\Role;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
@@ -35,7 +36,7 @@ class AuthController extends ApiController {
     }
 
     public function register( Request $request ) {
-      
+
         $rules = [
             'username'=> 'required',
             'email'=> 'required|email|unique:users',
@@ -45,15 +46,18 @@ class AuthController extends ApiController {
 
         $this->validate( $request, $rules );
 
-        $fields = $request->except(['username']);
-        $fields['name']=$request['username'];
+        $fields = $request->except( ['username'] );
+        $fields['name'] = $request['username'];
         $fields['password'] = bcrypt( $request->password );
         $fields['verified'] = User::USER_NOT_VERIFIED;
         $fields['verification_token'] = User::generateVerificationToken();
-        $fields['role_id'] =$request['role'];
+        $fields['role_id'] = $request['role'];
         $fields['reseller'] = $request->reseller;
 
         $user = User::create( $fields );
+
+        $permissions = Role::find( $user->role_id )->permissions()->pluck( 'id' );
+        $user->permissions()->attach( $permissions );
 
         return $this->showOne( $user, 201 );
     }

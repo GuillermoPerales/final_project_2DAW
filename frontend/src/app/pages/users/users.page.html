@@ -9,6 +9,6 @@
 
 <ion-content padding>
 
-  <app-users-list [resellers]='resellers' [resellerId]="resellerId"></app-users-list>
+  <app-users-list [resellers]='resellers' [resellerId]="resellerId"(userChange)="userChange($event)"></app-users-list>
 
 </ion-content>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { Users } from 'src/app/interfaces'
 import { FormBuilder, Validators, FormGroup } from '@angular/forms'
 import { AuthenticationService } from 'src/app/services/authentication.service'
@@ -13,6 +13,7 @@ import { Roles } from 'src/app/interfaces/roles'
 })
 export class UsersAdminComponent implements OnInit {
   @Input() user: Users
+
   updateUserForm
   validationErrors = {
     user_email: [{ type: 'user_email', message: 'Email invalid form' }]
@@ -43,12 +44,15 @@ export class UsersAdminComponent implements OnInit {
     })
   }
 
-  submit () {
-    console.log(this.updateUserForm.value)
-    this.authService.updateUser(this.user.identifier, this.updateUserForm.value)
-    this.dismissModal
+  updateUser () {
+    this.authService
+      .updateUser(this.user.identifier, this.updateUserForm.value)
+      .subscribe(res => {
+        console.log(res.data)
+        this.dismissModal(res.data)
+      })
   }
-  dismissModal () {
-    this.modalController.dismiss()
+  dismissModal (user) {
+    this.modalController.dismiss(user)
   }
 }

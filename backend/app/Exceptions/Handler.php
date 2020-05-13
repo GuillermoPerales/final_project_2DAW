@@ -80,9 +80,9 @@ class Handler extends ExceptionHandler {
             return $this->errorResponse( 'Url not Found', 404 );
         }
 
-        if ( $exception instanceof MethodNotAllowedHttpException ) {
-            return $this->errorResponse( 'Method not Allowed', 405 );
-        }
+        // if ( $exception instanceof MethodNotAllowedHttpException ) {
+        //     return $this->errorResponse( 'Method not Allowed', 405 );
+        // }
 
         if ( $exception instanceof HttpException ) {
             return $this->errorResponse( $exception->getMessage(), $exception->getStatusCode() );

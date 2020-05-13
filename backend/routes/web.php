@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //COmentar esto
-Route::get('/', function () {
-    return view('welcome');
-});
-Auth::routes(['verify'=>true]);
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Auth::routes(['verify'=>true]);
