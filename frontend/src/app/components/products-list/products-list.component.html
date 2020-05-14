@@ -6,7 +6,7 @@
     <ion-label>Type</ion-label>
     <ion-label>Price</ion-label>
   </ion-item>
-  <ion-item *ngFor="let data of products |filter:searchText">
+  <ion-item *ngFor="let data of products |filter:searchText" (click)=productModal(data)>
     <ion-label>{{data.product_name}}</ion-label>
     <ion-label>{{data.product_type}}</ion-label>
     <ion-label>{{data.product_price}}</ion-label>
