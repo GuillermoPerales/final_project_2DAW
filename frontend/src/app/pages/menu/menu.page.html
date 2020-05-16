@@ -8,7 +8,7 @@
         <ion-img src="assets/img/logoApp.png" style="width: 50%;height: 50%;"></ion-img>
         <ion-buttons slot="end">
           <ion-button color="danger" (click)="logout()">Logout</ion-button>
-          <ion-item color="tertiary" *ngIf="currentUser">{{currentUser.name}}</ion-item>
+          <ion-item color="success" *ngIf="currentUser">{{currentUser.name}}</ion-item>
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
       </ion-toolbar>
@@ -22,7 +22,21 @@
         </ion-menu-toggle>
       </ion-list>
     </ion-content>
+    <ion-footer>
+      <ion-toolbar>
+       
+          <ion-item lines="none">
+            <ion-icon slot="start" name="moon"></ion-icon>
+            <ion-label>
+              Dark Theme
+            </ion-label>
+            <ion-toggle slot="end" [ngModel]="darkTheme" (ionChange)="changeDarkTheme()"></ion-toggle>
+          </ion-item>
+        
+      </ion-toolbar>
+    </ion-footer>
   </ion-menu>
 
   <ion-router-outlet id="content" main></ion-router-outlet>
+
 </ion-split-pane>

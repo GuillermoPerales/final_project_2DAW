@@ -18,11 +18,15 @@ export class MenuPage implements OnInit {
     {
       title: 'Products',
       url: '/menu/products'
+    },
+    {
+      title: 'Licenses',
+      url:'/menu/licenses'
     }
   ]
 
   selectedPath = ''
-
+  darkTheme: boolean = false
   currentUser: Users
 
   constructor (
@@ -33,21 +37,27 @@ export class MenuPage implements OnInit {
     this.router.events.subscribe((event: RouterEvent) => {
       this.selectedPath = event.url
     })
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    this.darkTheme=prefersDark.matches;
   }
 
   ngOnInit () {
-    this.authService.checkToken().then(()=>{
+    this.authService.checkToken().then(() => {
       this.authService.getUser().subscribe(res => {
         this.currentUser = res
         console.log(res)
-      })      
-    })  
+      })
+    })
   }
 
   logout () {
-    
-    this.authService.logout().subscribe(res=>{
+    this.authService.logout().subscribe(res => {
       delete this.currentUser
     })
+  }
+
+  changeDarkTheme(){
+    this.darkTheme=!this.darkTheme
+    document.body.classList.toggle('dark')
   }
 }

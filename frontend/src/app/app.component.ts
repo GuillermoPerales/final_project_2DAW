@@ -11,6 +11,7 @@ import { Router } from '@angular/router'
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  
   constructor (
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -19,7 +20,9 @@ export class AppComponent {
     private navCtrl: NavController
   ) {
     this.initializeApp()
+ 
   }
+
 
   initializeApp () {
     this.platform.ready().then(() => {
@@ -33,6 +36,13 @@ export class AppComponent {
           this.navCtrl.navigateRoot(['login'])
         }
       })
+      this.checkDarkTheme()
     })
   }
+checkDarkTheme(){
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+  if(prefersDark.matches){
+    document.body.classList.toggle('dark')
+  }  
+}
 }

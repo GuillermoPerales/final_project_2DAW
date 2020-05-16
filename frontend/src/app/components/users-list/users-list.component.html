@@ -122,8 +122,9 @@
     </ion-col>
   </ion-row>
 
-  <ion-row *ngFor="let user of resellers" (click)="userAdminModal(user)">
-    <ion-col size="3">
+  <ion-row *ngFor="let user of resellers" >
+
+    <ion-col size="3" (click)="userAdminModal(user)">
       <ion-label>{{user.user_name}}</ion-label>
     </ion-col>
     <ion-col size="3">

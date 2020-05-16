@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router'
 
 import { MenuPage } from './menu.page'
 
-
 const routes: Routes = [
   {
     path: '',
@@ -12,13 +11,20 @@ const routes: Routes = [
     children: [
       {
         path: 'users',
-        loadChildren:()=>
-        import('../users/users.module').then(m=>m.UsersPageModule)
+        loadChildren: () =>
+          import('../users/users.module').then(m => m.UsersPageModule)
       },
       {
         path: 'products',
         loadChildren: () =>
           import('../products/products.module').then(m => m.ProductsPageModule)
+      },
+      {
+        path: 'licenses',
+        loadChildren: () =>
+          import('../licenses/licenses.module').then(
+            m => m.LicensesPageModule
+          )
       }
     ]
   }

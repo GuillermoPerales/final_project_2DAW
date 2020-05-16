@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Licenses</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item >
+    <ion-label>User</ion-label>
+    <ion-select interface="popover" placeholder="Select One" (ionChange)="changeUser($event)">
+      <ion-select-option *ngFor="let reseller of resellers" value="{{reseller.identifier}}">{{reseller.user_name}}</ion-select-option>    
+    </ion-select>
+  </ion-item>
+
+  <app-licenses-list [licenses]="licenses"></app-licenses-list>
+</ion-content>

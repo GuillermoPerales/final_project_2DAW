@@ -5,6 +5,7 @@ import { Users } from '../interfaces/users'
 import { map } from 'rxjs/operators'
 import { AuthenticationService } from './authentication.service'
 import { Roles } from '../interfaces/roles'
+import { Licenses } from '../interfaces/licenses'
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,12 @@ export class UsersService {
   }
   getAllRoles():Observable<[Roles]>{
     return this.apiService.get('/roles').pipe(map(data=>{
+      console.log(data)
+      return data
+    }))
+  }
+  getUserLicenses(id):Observable<[Licenses]>{
+    return this.apiService.get('/users/'+id+'/licenses').pipe(map(data=>{
       console.log(data)
       return data
     }))
