@@ -1,33 +1,31 @@
 <ion-content>
   <ion-grid>
-    <ion-row class="matrix no-padding">
-      <ion-col size="6" class="selector">
-        <div class="q-header">Activos</div>
-      
+    <ion-row>
+      <ion-col size="6">
+        <ion-item color="primary">
+          <ion-label>Active</ion-label>
+        </ion-item>
         <ion-list dragula="bag" id="activePermissions" [(dragulaModel)]="dragulaActivo" lines="none">
-         
-            <ion-item *ngFor="let item of userPermissions" expand="block" id="{{item.permission_id}}" class="ion-text-wrap">
-              {{ item.permission_name }}{{item.permission_id}}
-            </ion-item>
-         
+          <ion-item *ngFor="let item of userPermissions" expand="block" id="{{item.permission_id}}">
+            {{ item.permission_name }}
+          </ion-item>
         </ion-list>
       </ion-col>
-      <ion-col size="6" class="selector">
-        <div class="q-header">No Activos</div>
-
+      <ion-col size="6">
+        <ion-item color="primary">
+          <ion-label>Inactive</ion-label>
+        </ion-item>
         <ion-list dragula="bag" id="nonActivePermissions" [(dragulaModel)]="dragulaNoActivo" lines="none">
-          <ion-item *ngFor="let item of nonActivePermissions"expand="block" id="{{item.permission_id}}" class="ion-text-wrap">
-           
-              {{ item.permission_name }}{{item.permission_id}}
-         
+          <ion-item *ngFor="let item of nonActivePermissions" expand="block" id="{{item.permission_id}}">
+            {{ item.permission_name }}
           </ion-item>
         </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  
-  </ion-content>
-  <ion-button color="danger" expand="block" (click)="dismissModal()">Close
-    <ion-icon slot="end" name="close"></ion-icon>
-  </ion-button>
+
+</ion-content>
+<ion-button color="danger" expand="block" (click)="dismissModal()">Close
+  <ion-icon slot="end" name="close"></ion-icon>
+</ion-button>

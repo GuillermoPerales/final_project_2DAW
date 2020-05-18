@@ -8,9 +8,9 @@
 </ion-header>
 
 <ion-content>
-  <ion-item >
+  <ion-item color="secundary">
     <ion-label>User</ion-label>
-    <ion-select interface="popover" placeholder="Select One" (ionChange)="changeUser($event)">
+    <ion-select  interface="popover" placeholder="Select One" (ionChange)="changeUser($event)">
       <ion-select-option *ngFor="let reseller of resellers" value="{{reseller.identifier}}">{{reseller.user_name}}</ion-select-option>    
     </ion-select>
   </ion-item>

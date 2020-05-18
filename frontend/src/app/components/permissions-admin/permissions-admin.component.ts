@@ -18,8 +18,8 @@ export class PermissionsAdminComponent implements OnInit {
   avaliablePermissions: Array<Permissions> = []
   activePermissions: Array<Permissions> = []
   nonActivePermissions: Array<Permissions> = []
-  dragulaActivo=[]
-  dragulaNoActivo=[]
+  dragulaActivo = []
+  dragulaNoActivo = []
   constructor (
     private apiService: ApiService,
     private dragulaService: DragulaService,
@@ -27,17 +27,15 @@ export class PermissionsAdminComponent implements OnInit {
     private modalController: ModalController
   ) {
     this.dragulaService.drag('bag').subscribe(({ name, el, source }) => {
-      el.setAttribute('color', 'danger')
+      el.setAttribute('color','tertiary')      
       console.log(el.id)
     })
 
     this.dragulaService.drop('bag').subscribe(({ el, target }) => {
-      console.log(el.id, target.id)
+      el.removeAttribute('color')
       if (target.id === 'activePermissions') {
-        console.log(el.id, target.id)
         this.addPermission(el.id)
       } else if (target.id === 'nonActivePermissions') {
-        console.log(el.id, target.id)
         this.removePermission(el.id)
       } else {
         console.log('Error')

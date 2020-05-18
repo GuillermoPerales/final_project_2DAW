@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
 import { MenuPage } from './menu.page'
+import { AdminUsersGuard } from 'src/app/guards/admin-users.guard'
+import { LicensesGuardGuard } from 'src/app/guards/licenses-guard.guard'
 
 const routes: Routes = [
   {
@@ -11,6 +13,7 @@ const routes: Routes = [
     children: [
       {
         path: 'users',
+        canActivate:[AdminUsersGuard],
         loadChildren: () =>
           import('../users/users.module').then(m => m.UsersPageModule)
       },
@@ -21,6 +24,7 @@ const routes: Routes = [
       },
       {
         path: 'licenses',
+        canActivate:[LicensesGuardGuard],
         loadChildren: () =>
           import('../licenses/licenses.module').then(
             m => m.LicensesPageModule

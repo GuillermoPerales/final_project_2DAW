@@ -6,9 +6,9 @@
       <ion-toolbar>
         <!-- <ion-title>Menu</ion-title> -->
         <ion-img src="assets/img/logoApp.png" style="width: 50%;height: 50%;"></ion-img>
-        <ion-buttons slot="end">
+        <ion-buttons slot="end">          
+          <ion-item color="primary" *ngIf="currentUser">{{currentUser.name}}</ion-item>
           <ion-button color="danger" (click)="logout()">Logout</ion-button>
-          <ion-item color="success" *ngIf="currentUser">{{currentUser.name}}</ion-item>
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
       </ion-toolbar>
