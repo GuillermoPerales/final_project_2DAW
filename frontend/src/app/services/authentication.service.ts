@@ -74,7 +74,6 @@ export class AuthenticationService {
     return this.storage.get(TOKEN_KEY).then(res => {
       if (res) {
         this.token = res
-        // this.getUser()
         this.authenticationState.next(true)
       } else {
         delete this.token

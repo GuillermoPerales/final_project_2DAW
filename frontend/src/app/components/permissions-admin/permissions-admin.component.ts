@@ -13,7 +13,7 @@ import { Permissions } from '../../interfaces/permissions'
 })
 export class PermissionsAdminComponent implements OnInit {
   @Input() user: Users
-
+  userId: Number
   userPermissions: Array<Permissions> = []
   avaliablePermissions: Array<Permissions> = []
   activePermissions: Array<Permissions> = []
@@ -27,7 +27,7 @@ export class PermissionsAdminComponent implements OnInit {
     private modalController: ModalController
   ) {
     this.dragulaService.drag('bag').subscribe(({ name, el, source }) => {
-      el.setAttribute('color','tertiary')      
+      el.setAttribute('color', 'tertiary')
       console.log(el.id)
     })
 
@@ -48,6 +48,8 @@ export class PermissionsAdminComponent implements OnInit {
   }
 
   ngOnInit () {
+    console.log(this.user)
+    this.userId=this.user.identifier
     this.getUserPermissions()
   }
 
@@ -74,20 +76,23 @@ export class PermissionsAdminComponent implements OnInit {
 
   addPermission (id) {
     this.apiService
-      .put('/users/' + this.user.identifier + '/permissions/' + id)
+      .put('/users/' + this.userId + '/permissions/' + id)
       .subscribe(res => {
+        console.log(this.userId)
         console.log(res)
       })
   }
   removePermission (id) {
     this.apiService
-      .delete('/users/' + this.user.identifier + '/permissions/' + id)
+      .delete('/users/' + this.userId + '/permissions/' + id)
       .subscribe(res => {
         console.log(res)
+        console.log(this.user)
       })
   }
 
   dismissModal () {
+    delete this.userId
     this.modalController.dismiss()
   }
 }

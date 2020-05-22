@@ -64,10 +64,7 @@ class AuthController extends ApiController {
 
     public function logout( Request $request ) {
         $request->user()->token()->revoke();
-        return $this->successResponse( 'Logged out', 200 );
-        // return response()->json( [
-        //     'message' => 'Successfully logged out'
-        // ] );
+        return $this->successResponse( 'Logged out', 200 );      
     }
 
     /**

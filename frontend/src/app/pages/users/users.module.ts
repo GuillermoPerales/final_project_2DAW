@@ -11,8 +11,6 @@ import { UsersListComponent } from 'src/app/components/users-list/users-list.com
 import { UsersAdminComponent } from 'src/app/components/users-admin/users-admin.component'
 import { PermissionsAdminComponent } from 'src/app/components/permissions-admin/permissions-admin.component'
 import { DragulaModule } from 'ng2-dragula'
-
-
 @NgModule({
   imports: [CommonModule, FormsModule,ReactiveFormsModule, IonicModule, UsersPageRoutingModule,DragulaModule],
   declarations: [UsersPage, UsersListComponent,UsersAdminComponent,PermissionsAdminComponent],

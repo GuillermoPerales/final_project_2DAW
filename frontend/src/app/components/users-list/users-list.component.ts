@@ -37,7 +37,7 @@ export class UsersListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
     private apiService: ApiService,
-    private dragulaService:DragulaService
+    private dragulaService: DragulaService
   ) {
     this.newUserForm = this.formBuilder.group(
       {
@@ -85,7 +85,6 @@ export class UsersListComponent implements OnInit {
     })
   }
   userUpdate (user) {
-    console.log('afsfa')
     this.userChange.emit(user)
   }
 
@@ -98,9 +97,8 @@ export class UsersListComponent implements OnInit {
       showBackdrop: true
     })
     await modal.present()
-   await modal.onDidDismiss().then((res)=>{
+    await modal.onDidDismiss().then(res => {
       this.userUpdate(res.data)
-
     })
   }
 
@@ -113,10 +111,9 @@ export class UsersListComponent implements OnInit {
       showBackdrop: true
     })
     await modal.present()
-   await modal.onDidDismiss().then((res)=>{
+    await modal.onDidDismiss().then(res => {
+      
       this.dragulaService.destroy('bag')
-
     })
   }
-  
 }

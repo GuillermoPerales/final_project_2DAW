@@ -112,11 +112,10 @@ class UserController extends ApiController {
         if ( $request->has( 'role' ) ) {
             $user->permissions()->detach();
             $user->role_id = $request->role;
-            $permissions = Role::find( $request->role)->permissions()->pluck( 'id' );
+            $permissions = Role::find( $request->role )->permissions()->pluck( 'id' );
             $user->permissions()->attach( $permissions );
-
         }
-        
+
         if ( !$user->isDirty() ) {
             return $this->errorResponse( 'Nothing change', 422 );
         }

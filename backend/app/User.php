@@ -20,14 +20,14 @@ class User extends Authenticatable implements MustVerifyEmail {
     const USER_NOT_VERIFIED = '0';
 
     public $transformer = UserTransformer::class;
-    
-    protected $dates=['delete_at'];
+
+    protected $dates = ['delete_at'];
     /**
     * The attributes that are mass assignable.
     *
     * @var array
     */
-    protected $fillable = [        
+    protected $fillable = [
         'name',
         'email',
         'password',
@@ -37,14 +37,16 @@ class User extends Authenticatable implements MustVerifyEmail {
         'role_id'
     ];
 
-    public function setNameAttribute($value){
-        $this->attributes['name']= strtolower($value);
+    public function setNameAttribute( $value ) {
+        $this->attributes['name'] = strtolower( $value );
     }
-    public function setEmailAttribute($value){
-        $this->attributes['email']= strtolower($value);
+
+    public function setEmailAttribute( $value ) {
+        $this->attributes['email'] = strtolower( $value );
     }
-    public function getNameAttribute($value){
-        return ucfirst($value);
+
+    public function getNameAttribute( $value ) {
+        return ucfirst( $value );
     }
 
     /**
@@ -58,32 +60,19 @@ class User extends Authenticatable implements MustVerifyEmail {
         'verification_token',
     ];
 
-    // /**
-    // * The attributes that should be cast to native types.
-    // *
-    // * @var array
-    // */
-    // protected $casts = [
-    //     'email_verified_at' => 'datetime',
-    // ];
-
-    public function isVerified(){
+    public function isVerified() {
         return $this->verified == User::USER_VERIFIED;
     }
 
-public static function generateVerificationToken(){
-    return Str::random(40);
-}
+    public static function generateVerificationToken() {
+        return Str::random( 40 );
+    }
 
-// public function rol(){
-//     return $this->hasOne(Role::class);
-// }
+    public function permissions() {
+        return $this->belongsToMany( Permission::class );
+    }
 
-public function permissions(){
-    return $this->belongsToMany(Permission::class);
-}
-
-public function licenses(){
-    return $this->hasMany(License::class);
-}
+    public function licenses() {
+        return $this->hasMany( License::class );
+    }
 }
